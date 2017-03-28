@@ -1,0 +1,15 @@
+page-home {
+    .area {
+        .scroll-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            strong {
+                color: green;
+                margin-bottom: 1.5em;
+            }
+        }
+    }
+}
