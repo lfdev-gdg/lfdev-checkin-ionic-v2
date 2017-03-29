@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AngularFire, FirebaseObjectObservable, FirebaseListObservable} from 'angularfire2';
+import {AngularFire} from 'angularfire2';
 
 import {BarcodeScanner} from "@ionic-native/barcode-scanner";
 import {AlertController, LoadingController} from "ionic-angular";
@@ -14,8 +14,6 @@ export class HomePage {
     inscritos: Array<any>;
     busca: string = '';
     private inscritosFull: Array<any>;
-    private check: FirebaseObjectObservable<any>;
-    private checkObj: any;
 
     constructor(
         private fire: AngularFire,
@@ -27,8 +25,7 @@ export class HomePage {
 
     private loadInscritos(): void {
         let loader = this.loadingCtrl.create({
-            content: "Carregando...",
-            //duration: 3000
+            content: "Carregando..."
         });
         loader.present();
 
@@ -45,13 +42,10 @@ export class HomePage {
     fazerCheckIn(): void {
         this.barcodeScanner.scan().then((barcodeData) => {
             if (barcodeData.text.charAt(0) == '-') {
-                this.check = this.fire.database.object('/inscricoes/'+barcodeData.text);
-                this.check.subscribe(
-                    snapshot => {
-                        this.checkObj = snapshot;
-                        this.updateCheck();
-                    }
-                );
+                this.inscritosFull.forEach( i => {
+                    if (i.$key == barcodeData.text)
+                        this.checkIn(i);
+                });
             }
         }, (err) => {
             console.error(err);
@@ -65,16 +59,6 @@ export class HomePage {
             buttons: ['OK']
         });
         alert.present();
-    }
-
-    private updateCheck(): void {
-        if (!this.checkObj.checkin) {
-            this.msg = 'registrano...';
-            this.check.update({checkin: new Date().getTime()})
-                .catch(err => console.error(err));
-        } else {
-            this.alert('Check-in', this.checkObj.name + ' - check-in OK!');
-        }
     }
 
     checkIn(insc: any): void {
@@ -94,12 +78,6 @@ export class HomePage {
                         this.fire.database.list('/inscricoes').update(insc.$key, {checkin: insc.checkin ? null : new Date().getTime()}).then(
                             () => this.loadInscritos()
                         ).catch( err => console.error(err));
-                        /*if (!insc.checkin)
-                            this.fire.database.list('/inscricoes').update(insc.$key, {checkin: new Date().getTime()}).then(
-                                () => this.loadInscritos()
-                            ).catch( err => console.error(err));
-                        else
-                            this.alert('Chack-in', insc.name.split(' ')+ ' já fez check-in');*/
                     }
                 }
             ]
