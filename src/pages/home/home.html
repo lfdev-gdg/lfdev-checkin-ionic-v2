@@ -1,14 +1,49 @@
 <ion-header>
     <ion-navbar color="secondary">
         <ion-title>
-            LFDev - Check-in
+            LFDev GDG - Check-in
         </ion-title>
     </ion-navbar>
 </ion-header>
 
-<ion-content padding class="area">
+<div class="area">
 
-    <strong>{{msg}}</strong>
-    <button ion-button block color="danger" (click)="fazerCheckIn()">Check-in!</button>
+    <div class="qr" padding>
+        <!--<strong>{{msg}}</strong>-->
+        <button ion-button block color="danger" (click)="fazerCheckIn()">Check-in via QR-code!</button>
 
-</ion-content>
+        <ion-item>
+            <ion-label floating>buscar</ion-label>
+            <ion-input type="text" [(ngModel)]="busca" (input)="filtrar()"></ion-input>
+        </ion-item>
+    </div>
+
+    <ion-content class="lista">
+
+        <ion-list>
+
+            <ion-item-sliding *ngFor="let insc of inscritos">
+                <ion-item>
+                    <h2 [style.color]="insc.checkin ? 'green':'#333'">{{insc.name}}</h2>
+                </ion-item>
+                <ion-item-options side="right">
+                    <button ion-button color="primary" (click)="checkIn(insc)" *ngIf="!insc.checkin">
+                        <ion-icon name="md-checkmark"></ion-icon>
+                        Checkin
+                    </button>
+                    <button ion-button color="primary" (click)="checkIn(insc)" *ngIf="insc.checkin">
+                        <ion-icon name="md-remove"></ion-icon>
+                        Checkout
+                    </button>
+                    <button ion-button color="danger" (click)="delete(insc)">
+                        <ion-icon name="md-close"></ion-icon>
+                        Excluir
+                    </button>
+                </ion-item-options>
+            </ion-item-sliding>
+
+        </ion-list>
+
+    </ion-content>
+
+</div>

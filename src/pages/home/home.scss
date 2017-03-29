@@ -1,15 +1,26 @@
 page-home {
     .area {
-        .scroll-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 90vh;
+        margin-top: 60px;
+
+        .qr {
+            width: 100%;
+            min-height: 10vh;
 
             strong {
                 color: green;
                 margin-bottom: 1.5em;
+                display: block;
+                text-align: center;
             }
+        }
+
+        .lista {
+            flex-grow: 1;
         }
     }
 }

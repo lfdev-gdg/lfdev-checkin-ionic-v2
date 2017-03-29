@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="tk.lfdev.checkinapp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="tk.lfdev.checkinapp" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Check-In!</name>
     <description>App para fazer checkin no evento lfdev gdg</description>
     <author email="walter@wgbn.com.br" href="http://wgbn.com.br">Walter Gandarella</author>
